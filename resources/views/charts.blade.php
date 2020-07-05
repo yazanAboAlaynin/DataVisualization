@@ -3,7 +3,6 @@
 
     <script>
         function draw() {
-            /* Accepting and seperating comma seperated values */
 
             var values = {!! $all !!};
 
@@ -29,12 +28,16 @@
             ctx.fillStyle = '#000000';
             ctx.fillText('Scale X : '+canvas.width+' Y : '+canvas.height,800,10);
 
+
         }
         function reset(){
             var canvas = document.getElementById('myCanvas');
             var ctx = canvas.getContext('2d');
             ctx.clearRect(0, 0, canvas.width, canvas.height);
         }
+
+
+
     </script>
 </head>
 <body align="center">

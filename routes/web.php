@@ -19,3 +19,4 @@ Route::get('/', function () {
 Route::get('/home','UserController@index');
 Route::get('/upload/file','UserController@uploadFile')->name('upload.file');
 Route::post('/store','UserController@store')->name('store');
+Route::get('/test','UserController@test')->name('test');

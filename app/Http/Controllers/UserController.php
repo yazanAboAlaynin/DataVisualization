@@ -32,4 +32,8 @@ class UserController extends Controller
         $all_data = \GuzzleHttp\json_encode($all_data);
         return view('charts',['all' => $all_data]);
     }
+
+    public function test(){
+        return view('circle');
+    }
 }

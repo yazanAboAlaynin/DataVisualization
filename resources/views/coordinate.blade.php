@@ -1,13 +1,31 @@
-<html>
-<head>
+@extends('layouts.app')
 
-</head>
-<body align="center">
+@section('content')
 
-<input type="button" value="submit" name="submit" onclick="draw()">
-<input type="button" value="Clear" name="Clear" onclick="reset()"><br><br>
-<canvas id="myCanvas" width="1000" height="500" style="border:1px solid black">
-</canvas>
+    <div class="container justify-content-center">
+        <div class="row pb-3">
+            <div class="col-md-1">
+                <input class="btn btn-primary" type="button" value="show" name="show" onclick="draw()">
+            </div>
+            <div class="col-md-1">
+                <input class="btn btn-primary" type="button" value="Clear" name="Clear" onclick="reset()">
+            </div>
+        </div>
+
+
+        <div class="row ">
+            <div class="col-lg-6">
+
+                <canvas id="myCanvas" width="1000" height="500" style="border:1px solid black">
+                </canvas>
+            </div>
+            <div class="col-lg-3">
+                <ul id="dvLegend"></ul>
+            </div>
+        </div>
+    </div>
+
+
 <script>
 
     var canvas = document.getElementById('myCanvas');
@@ -91,5 +109,4 @@
     drawAxis();
     drawChart();
 </script>
-</body>
-</html>
+@endsection

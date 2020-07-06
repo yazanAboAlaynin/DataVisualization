@@ -2,22 +2,20 @@
 
 @section('content')
 <div class="container justify-content-center">
+    <div class="row">
+        <div class="col-md-1">
+            <a id="download" href="#"  onclick="saveit()" download>download</a>
 
-    <div class="row pb-3">
-        <div class="col-md-1">
-            <input class="btn btn-primary" type="button" value="Show" name="Show" onclick="draw()">
-        </div>
-        <div class="col-md-1">
-            <input class="btn btn-primary" type="button" value="Edit" name="Edit" onclick="edit()">
         </div>
     </div>
-
     <div class="row ">
         <div class="col-lg-6">
             <canvas id="can" width="500" height="500"></canvas>
+            <img id="image" style="display: none;"/>
         </div>
         <div class="col-lg-3">
             <ul id="dvLegend"></ul>
+
         </div>
     </div>
 </div>
@@ -26,7 +24,6 @@
 <br/>
 
 <script>
-
     var canvas = document.getElementById("can");
     var ctx = canvas.getContext("2d");
     var lastend = 0;
@@ -164,6 +161,12 @@
         }
     };
 
+    function saveit() {
+
+        var dataUrl = canvas.toDataURL();
+        document.getElementById("image").src = dataUrl;
+        document.getElementById("download").href = dataUrl;
+    }
 
     
     draw();

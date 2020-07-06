@@ -59,4 +59,10 @@ class UserController extends Controller
 
         return view('coordinate',compact('all'));
     }
+
+    public function save(Request $request){
+        if($request->ajax())
+        return 1;
+        return 1;
+    }
 }

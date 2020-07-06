@@ -6,6 +6,11 @@
             <div class="row pb-3">
                 <div class="col-md-1">
                     <input class="btn btn-primary" type="button" value="show" name="show" onclick="draw()">
+
+                </div>
+                <div class="col-md-1">
+                    <a id="download" href="#"  onclick="saveit()" download>download</a>
+
                 </div>
                 <div class="col-md-1">
                     <input class="btn btn-primary" type="button" value="Clear" name="Clear" onclick="reset()">
@@ -18,6 +23,7 @@
 
                     <canvas id="myCanvas" width="900" height="500" style="border:1px solid #c3c3c3;">
                     </canvas>
+                    <img id="image" style="display: none;"/>
                 </div>
                 <div class="col-lg-3">
                     <ul id="dvLegend"></ul>
@@ -96,6 +102,13 @@
                 var canvas = document.getElementById('myCanvas');
                 var ctx = canvas.getContext('2d');
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
+            }
+
+            function saveit() {
+
+                var dataUrl = canvas.toDataURL();
+                document.getElementById("image").src = dataUrl;
+                document.getElementById("download").href = dataUrl;
             }
 
             draw();

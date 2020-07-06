@@ -9,14 +9,17 @@
                 <label for="favcolor">Select your favorite line color:</label>
                 <input class="" type="color" value="Clear" name="Clear" onchange="edit(this.value)">
             </div>
+            <div class="col-md-6">
+                <a id="download" href="#"  onclick="saveit()" download>download</a>
+            </div>
         </div>
 
 
         <div class="row ">
             <div class="col-lg-6">
-
                 <canvas id="myCanvas" width="1000" height="500" style="border:1px solid black">
                 </canvas>
+                <img id="image" style="display: none;"/>
             </div>
             <div class="col-lg-3">
                 <ul id="dvLegend"></ul>
@@ -121,6 +124,12 @@
         drawGrids();
         drawAxis();
         drawChart();
+    }
+    function saveit() {
+
+        var dataUrl = canvas.toDataURL();
+        document.getElementById("image").src = dataUrl;
+        document.getElementById("download").href = dataUrl;
     }
 
 

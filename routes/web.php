@@ -22,3 +22,4 @@ Route::post('/store','UserController@store')->name('store');
 Route::get('/circle','UserController@circle')->name('circle');
 Route::get('/coordinate','UserController@coordinate')->name('coordinate');
 Route::get('/bar','UserController@bar')->name('bar');
+Route::get('/save','UserController@save')->name('save');

@@ -94,7 +94,6 @@
 
         entries.forEach(function (val,idx){
             var populationBlocks = val[1][1]/100;
-
             ctx.strokeStyle = "black";
             ctx.strokeText(val[1][0],blocks(xPlot),blocks(40-populationBlocks-2));
             ctx.strokeStyle = "red";

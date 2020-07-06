@@ -27,25 +27,23 @@
 
 
 
-
+<br/>
+<br/>
+<br/>
         <script>
-            window.onload(
-                draw()
-            );
+            var colors = ['#4CAF50', '#00BCD4', '#E91E63', '#FFC107', '#9E9E9E', '#CDDC39', '#18FFFF', '#F44336', '#6D4C41','red', 'green', 'blue','gray','yellow','black','cyan','pink','purple','brown'];
+            var values = {!! $all !!};
+            var canvas = document.getElementById('myCanvas');
+            var ctx = canvas.getContext('2d');
+
             function draw() {
-
-                var values = {!! $all !!};
-
-                //var values = 0;
-                var canvas = document.getElementById('myCanvas');
-                var ctx = canvas.getContext('2d');
 
                 var width = 40; //bar width
                 var X = 50; // first bar position
                 var base = 200;
 
                 for (var i =0; i<values.length; i++) {
-                    ctx.fillStyle = '#008080';
+                    ctx.fillStyle = colors[i%colors.length];
                     var h = values[i][1];
                     ctx.fillRect(X,canvas.height - h,width,h);
 
@@ -60,13 +58,47 @@
 
 
             }
+
+            canvas.onmousemove = function (e) {
+
+                var rect = this.getBoundingClientRect(),
+                    x = e.clientX - rect.left,
+                    y = e.clientY - rect.top;
+
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+
+                var width = 40; //bar width
+                var X = 50; // first bar position
+                var base = 200;
+
+                for (var i =0; i<values.length; i++) {
+
+                    var h = values[i][1];
+                    ctx.beginPath();
+                    ctx.rect(X,canvas.height - h,width,h);
+                    ctx.fillStyle = ctx.isPointInPath(x, y) ? "#008080" : colors[i%colors.length];
+                    ctx.fill();
+                    X +=  width+15;
+                    /* text to display Bar number */
+                    ctx.fillStyle = '#4da6ff';
+                    ctx.fillText(values[i],X-50,canvas.height - h -10);
+                }
+                /* Text to display scale */
+                ctx.fillStyle = '#000000';
+                ctx.fillText('Scale X : '+canvas.width+' Y : '+canvas.height,800,10);
+
+
+
+
+            };
+
             function reset(){
                 var canvas = document.getElementById('myCanvas');
                 var ctx = canvas.getContext('2d');
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
             }
 
-
+            draw();
 
         </script>
 @endsection

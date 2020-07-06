@@ -147,8 +147,6 @@
             if(ctx.isPointInPath(x, y)) {
                 document.getElementById(i).style.fontSize = "20px";
                 document.getElementById("can").style.cursor = "pointer";
-
-
                 ctx.lineWidth   = 8;
                 ctx.strokeStyle = myColor[j];
                 ctx.stroke();

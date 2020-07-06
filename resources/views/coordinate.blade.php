@@ -4,11 +4,10 @@
 
     <div class="container justify-content-center">
         <div class="row pb-3">
-            <div class="col-md-1">
-                <input class="btn btn-primary" type="button" value="show" name="show" onclick="draw()">
-            </div>
-            <div class="col-md-1">
-                <input class="btn btn-primary" type="button" value="Clear" name="Clear" onclick="reset()">
+
+            <div class="col-md-6">
+                <label for="favcolor">Select your favorite line color:</label>
+                <input class="" type="color" value="Clear" name="Clear" onchange="edit(this.value)">
             </div>
         </div>
 
@@ -29,10 +28,8 @@
 <script>
 
     var canvas = document.getElementById('myCanvas');
+    var color = "#042b76";
 
-    var xGrid = 10;
-    var yGrid = 10;
-    var cellSize = 10;
 
     var ctx = canvas.getContext('2d');
     var values = {!! $all !!};
@@ -42,6 +39,9 @@
 
 
     function drawGrids() {
+        var xGrid = 10;
+        var yGrid = 10;
+        var cellSize = 10;
         ctx.beginPath();
 
         while(xGrid < canvas.height){
@@ -95,14 +95,34 @@
         entries.forEach(function (val,idx){
             var populationBlocks = val[1][1]/100;
             ctx.strokeStyle = "black";
+            ctx.lineWidth   = 2;
+            ctx.font="15pt Calibri";
             ctx.strokeText(val[1][0],blocks(xPlot),blocks(40-populationBlocks-2));
-            ctx.strokeStyle = "red";
+            ctx.strokeStyle = color;
+            ctx.lineWidth   = 3;
             ctx.lineTo(blocks(xPlot),blocks(40-populationBlocks));
             ctx.arc(blocks(xPlot),blocks(40-populationBlocks),2,0,Math.PI*2,true);
             xPlot+=5;
         });
         ctx.stroke();
     }
+
+    function reset(){
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        var w = canvas.width;
+        canvas.width = 1;
+        canvas.width = w;
+
+    }
+    function edit(col) {
+
+        color = col;
+        reset();
+        drawGrids();
+        drawAxis();
+        drawChart();
+    }
+
 
     drawGrids();
     drawAxis();

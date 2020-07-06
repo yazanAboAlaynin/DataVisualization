@@ -30,7 +30,7 @@ class UserController extends Controller
         fclose($file);
         //dd($all_data);
         $all_data = \GuzzleHttp\json_encode($all_data);
-        return view('charts',['all' => $all_data]);
+        return view('circle',['all' => $all_data]);
     }
 
     public function test(){

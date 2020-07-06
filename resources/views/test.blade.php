@@ -18,14 +18,7 @@
 
     var ctx = canvas.getContext('2d');
     var values = {!! $all !!};
-    var data = {
-        jan: 1000,
-        feb: 2700,
-        mar: 500,
-        july: 2100,
-        aug: 3000,
-        sep: 3000
-    };
+
 
     const entries = Object.entries(values);
 

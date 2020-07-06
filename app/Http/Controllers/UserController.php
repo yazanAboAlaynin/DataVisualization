@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Session;
 use Illuminate\Support\Facades\Storage;
 
 class UserController extends Controller
@@ -30,10 +31,32 @@ class UserController extends Controller
         fclose($file);
         //dd($all_data);
         $all_data = \GuzzleHttp\json_encode($all_data);
-        return view('circle',['all' => $all_data]);
+
+        Session::push('all', $all_data);
+        return redirect()->route('circle');
     }
 
-    public function test(){
-        return view('circle');
+    public function circle(){
+
+        $all = Session::get('all');
+        $all = $all[0];
+
+        return view('circle',compact('all'));
+    }
+
+    public function bar(){
+
+        $all = Session::get('all');
+        $all = $all[0];
+
+        return view('bar',compact('all'));
+    }
+
+    public function coordinate(){
+
+        $all = Session::get('all');
+        $all = $all[0];
+
+        return view('coordinate',compact('all'));
     }
 }

@@ -1,14 +1,21 @@
-<html>
-<head>
+@extends('layouts.app')
 
-</head>
-<body >
+@section('content')
+<div class="container justify-content-center">
+    <div class="row ">
+        <div class="col-lg-6">
+            <canvas id="can" width="500" height="500"></canvas>
+        </div>
+        <div class="col-lg-3">
+            <ul id="dvLegend"></ul>
+        </div>
+    </div>
+</div>
 
 
-<canvas id="can" width="500" height="500"></canvas>
 <br/>
 <br/>
-<ul id="dvLegend"></ul>
+
 <script>
     var canvas = document.getElementById("can");
     var ctx = canvas.getContext("2d");
@@ -39,7 +46,9 @@
         x.id = idx;
         var t = document.createTextNode(val[1][0]+" "+val[1][1]);
         x.appendChild(t);
-        x.style.color = myColor[idx%myColor.length];
+        x.style.background = myColor[idx%myColor.length];
+        x.className = "list-group-item";
+
         document.getElementById("dvLegend").append(x);
 
         x.onmouseover = function () {
@@ -66,7 +75,6 @@
             ctx.moveTo(canvas.width / 2, canvas.height / 2);
             ctx.arc(canvas.width / 2, canvas.height / 2, canvas.height / 2, arcs[i][0], arcs[i][1], false);
             ctx.lineTo(canvas.width / 2, canvas.height / 2);
-            //alert(arcs[i][0]+" "+x+" "+arcs[i][1]+" "+y);
             ctx.fillStyle = myColor[j];
 
 
@@ -104,6 +112,8 @@
 
 
             if(ctx.isPointInPath(x, y)) {
+                document.getElementById(i).style.fontSize = "20px";
+
                 ctx.lineWidth   = 8;
                 ctx.strokeStyle = myColor[j];
                 ctx.stroke();
@@ -115,7 +125,13 @@
 
     };
 
+    canvas.onmouseout = function (e) {
+        for(var i=0;i<entries.length;i++) {
+            document.getElementById(i).style.fontSize = "18px";
+        }
+    }
+
+
 
 </script>
-</body>
-</html>
+@endsection

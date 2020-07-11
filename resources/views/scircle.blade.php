@@ -206,30 +206,4 @@
     draw();
 
 </script>
-
-<script>
-    $(document).ready(function(){
-        setInterval(function(){
-            $.ajax({
-                headers: {
-                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                },
-                url:'/circle',
-                type:'GET',
-                dataType:'json',
-                success:function(response){
-                    if(response.all.length>0){
-                        values = JSON.parse(response.all);
-                        entries = Object.entries(values);
-                        //alert(values);
-                        reset();
-                        draw();
-                    }
-                },error:function(err){
-
-                }
-            })
-        }, 3000);
-    });
-</script>
 @endsection

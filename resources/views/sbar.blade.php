@@ -111,28 +111,4 @@
 
         </script>
 
-    <script>
-        $(document).ready(function(){
-            setInterval(function(){
-                $.ajax({
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    url:'/bar',
-                    type:'GET',
-                    dataType:'json',
-                    success:function(response){
-                        if(response.all.length>0){
-                            values = JSON.parse(response.all);
-                            //alert(values);
-                            reset();
-                            draw();
-                        }
-                    },error:function(err){
-
-                    }
-                })
-            }, 3000);
-        });
-    </script>
 @endsection

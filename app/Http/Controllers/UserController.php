@@ -9,6 +9,7 @@ use Illuminate\Support\Facades\Storage;
 class UserController extends Controller
 {
     public function uploadFile(){
+        Session::remove('all');
         return view('uploadFile');
     }
 
@@ -36,33 +37,83 @@ class UserController extends Controller
         return redirect()->route('circle');
     }
 
-    public function circle(){
+    public function circle(Request $request){
 
         $all = Session::get('all');
         $all = $all[0];
+
+        if($request->ajax()){
+            return response()->json(array('all'=>$all));
+        }
 
         return view('circle',compact('all'));
     }
 
-    public function bar(){
+    public function bar(Request $request){
 
         $all = Session::get('all');
         $all = $all[0];
 
+        if($request->ajax()){
+            return response()->json(array('all'=>$all));
+        }
         return view('bar',compact('all'));
     }
 
-    public function coordinate(){
+    public function coordinate(Request $request){
 
         $all = Session::get('all');
         $all = $all[0];
+
+        if($request->ajax()){
+            return response()->json(array('all'=>$all));
+        }
 
         return view('coordinate',compact('all'));
     }
 
+    public function scircle(Request $request){
+
+        $all = Session::get('all');
+        $all = $all[0];
+
+        return view('scircle',compact('all'));
+    }
+
+    public function sbar(Request $request){
+
+        $all = Session::get('all');
+        $all = $all[0];
+
+        return view('sbar',compact('all'));
+    }
+
+    public function scoordinate(Request $request){
+
+        $all = Session::get('all');
+        $all = $all[0];
+
+        return view('scoordinate',compact('all'));
+    }
+
     public function save(Request $request){
-        if($request->ajax())
+        if($request->ajax()){
+
+            $all = $request->all;
+            Session::remove('all');
+            $all = \GuzzleHttp\json_encode($all);
+
+            Session::push('all', $all);
+            return response()->json(['success' => 1], 200);
+        }
         return 1;
-        return 1;
+    }
+
+    public function updateData(){
+        $all = Session::get('all');
+        $all = $all[0];
+        $all= \GuzzleHttp\json_decode($all);
+
+        return view('updateData',compact('all'));
     }
 }

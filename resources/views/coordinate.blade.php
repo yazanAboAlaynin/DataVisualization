@@ -42,20 +42,23 @@
 
 
     function drawGrids() {
+        // draw the background grids
         var xGrid = 10;
         var yGrid = 10;
         var cellSize = 10;
         ctx.beginPath();
 
+        // draw until we xGrid smaller than canvas height
         while(xGrid < canvas.height){
-            ctx.moveTo(0,xGrid);
-            ctx.lineTo(canvas.width,xGrid);
+            ctx.moveTo(0,xGrid); // move to the start position (0,xGrid) on the y axis
+            ctx.lineTo(canvas.width,xGrid); // draw line to the end  of the canvas
             xGrid+=cellSize;
         }
 
+        // draw until we yGrid smaller than canvas width
         while(yGrid < canvas.width){
-            ctx.moveTo(yGrid,0);
-            ctx.lineTo(yGrid,canvas.height);
+            ctx.moveTo(yGrid,0);// move to the start position (yGrid,0) on the x axis
+            ctx.lineTo(yGrid,canvas.height); // draw line to the end  of the canvas
             yGrid+=cellSize;
         }
         ctx.strokeStyle = "gray";
@@ -67,19 +70,22 @@
     }
 
     function drawAxis(){
+        // draw the primary axis
         var yPlot = 40;
         var pop = 0;
 
         ctx.beginPath();
-        ctx.strokeStyle = "black";
-        ctx.moveTo(blocks(5),blocks(5));
-        ctx.lineTo(blocks(5),blocks(40));
-        ctx.lineTo(blocks(80),blocks(40));
+        ctx.strokeStyle = "black"; //give it color black
+        ctx.moveTo(blocks(5),blocks(5)); // move 5 blocks on the x and 5 on the y
+        ctx.lineTo(blocks(5),blocks(40)); // Y axis: draw line to position (5 blocks on x, 40 block on y)
+        ctx.lineTo(blocks(80),blocks(40)); // X axis: draw line to position (80 blocks , 40 blocks)
 
-        ctx.moveTo(blocks(5),blocks(40));
+        ctx.moveTo(blocks(5),blocks(40)); // move to position ( 5 blocks, 40 blocks)
 
+        // draw the numbers on the Y axis
         for(var i=1;i<=10;i++){
-            ctx.strokeText(pop,blocks(2),blocks(yPlot));
+            // pop is the number we want to draw it start with 0 and increase 500 every time
+            ctx.strokeText(pop,blocks(2),blocks(yPlot)); // draw text (pop) in position (2 block,yPlot)
             yPlot-=5;
             pop+=500;
         }
@@ -89,22 +95,24 @@
     }
 
     function drawChart() {
+
+        // draw the chart
         ctx.beginPath();
-        ctx.strokeStyle = "red";
-        ctx.moveTo(blocks(5),blocks(40));
+        //ctx.strokeStyle = "red";
+        ctx.moveTo(blocks(5),blocks(40)); // move to position (0,0) on our axis
 
         var xPlot = 10;
 
         entries.forEach(function (val,idx){
-            var populationBlocks = val[1][1]/100;
+            var populationBlocks = val[1][1]/100; //get the value
             ctx.strokeStyle = "black";
             ctx.lineWidth   = 2;
             ctx.font="15pt Calibri";
-            ctx.strokeText(val[1][0],blocks(xPlot),blocks(40-populationBlocks-2));
-            ctx.strokeStyle = color;
+            ctx.strokeText(val[1][0],blocks(xPlot),blocks(40-populationBlocks-2)); //draw the text on its position
+            ctx.strokeStyle = color; // change the color to draw the line
             ctx.lineWidth   = 3;
-            ctx.lineTo(blocks(xPlot),blocks(40-populationBlocks));
-            ctx.arc(blocks(xPlot),blocks(40-populationBlocks),2,0,Math.PI*2,true);
+            ctx.lineTo(blocks(xPlot),blocks(40-populationBlocks)); // draw line to the position of this point
+            ctx.arc(blocks(xPlot),blocks(40-populationBlocks),2,0,Math.PI*2,true); // draw small arc in the point
             xPlot+=5;
         });
         ctx.stroke();
@@ -116,7 +124,7 @@
         ctx.lineWidth   = 1;
     }
     function edit(col) {
-
+        // when changing the color
         color = col;
         reset();
         drawGrids();

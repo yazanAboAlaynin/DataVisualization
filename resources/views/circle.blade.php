@@ -39,36 +39,42 @@
     function draw() {
         arcs = [];
         myTotal = 0;
+
+        // calculate the total value we have
         entries.forEach(function (val,idx) {
 
             myTotal+=val[1][1]/1 ;
 
         });
+        // get the <ul> to put <li> in it that have the name and input to change the color
         document.getElementById("dvLegend").innerHTML = "";
         var beginAngle = 0;
         var endAngle = 0;
         entries.forEach(function (val,idx) {
-            ctx.fillStyle = myColor[idx];
-            ctx.beginPath();
-            ctx.moveTo(canvas.width / 2, canvas.height / 2);
+            ctx.fillStyle = myColor[idx]; // choosing color
+            ctx.beginPath(); // start drawing
+            ctx.moveTo(canvas.width / 2, canvas.height / 2); // move the cursor to start position
             // Arc Parameters: x, y, radius, startingAngle (radians), endingAngle (radians), antiClockwise (boolean)
             ctx.arc(canvas.width / 2, canvas.height / 2, canvas.height / 2, lastend, lastend + (Math.PI * 2 * (val[1][1] / myTotal)), false);
-            ctx.lineTo(canvas.width / 2, canvas.height / 2);
+            ctx.lineTo(canvas.width / 2, canvas.height / 2); // رسم القطاع الدائري و اغلاقه
             ctx.fill();
+            // store the value of each circle start angle and end angle to use it again in arcs array
             arcs.push([lastend, lastend + (Math.PI * 2 * (val[1][1] / myTotal))]);
-            var x = document.createElement("LI");
-            x.id = idx;
-            var t = document.createTextNode(val[1][0]);
-            var tt = document.createElement("input");
-            tt.style.float = "right";
+            var x = document.createElement("LI"); // create li element to put it in the ul
+            x.id = idx; // assign id value
+            var t = document.createTextNode(val[1][0]); // create text inside the li
+            var tt = document.createElement("input"); // create change color input
+            tt.style.float = "right"; // put the input on the right side
             var emp = document.createTextNode(" ");
-            tt.type = "color";
+            tt.type = "color"; // make the type of input color
+            // put the elements inside each other
             x.appendChild(t);
             x.appendChild(emp);
             x.appendChild(tt);
-            x.style.background = myColor[idx];
+            x.style.background = myColor[idx]; // give a background color to the li same as the color of its arc
             x.className = "list-group-item";
 
+            // put the value in the middle of the arc and this is the equation to make that
             beginAngle = endAngle; //begin angle
             endAngle = endAngle + ((Math.PI * 2) * (val[1][1] / myTotal)); //end angle
             var pieRadius = Math.min(canvas.width / 2, canvas.height / 2);
@@ -81,36 +87,41 @@
 
             document.getElementById("dvLegend").append(x);
 
+            // when mouse move on the li element
             x.onmouseover = function () {
-                hover(this.id);
-                this.style.fontSize = "20px";
+                hover(this.id); // call hover function that will draw again
+                this.style.fontSize = "20px"; // make the font bigger
                 this.style.cursor = "pointer";
             };
+
+            // when moving mouse out of the li
             x.onmouseout = function () {
                 //hover(this.id);
-                this.style.fontSize = "18px";
+                this.style.fontSize = "18px"; // just make the font as default
             };
 
             tt.onchange = function () {
-                edit(idx,this.value);
+                edit(idx,this.value); // when the color change call edit to change it on circle
             };
 
+            // move cursor to the end of arc to draw the next arc
             lastend += Math.PI * 2 * (val[1][1] / myTotal);
         });
     }
 
     function edit(idx,col) {
 
-        myColor[idx] = col;
-        reset();
-        draw();
+        myColor[idx] = col; // change the color as requested
+        reset(); // clear canvas
+        draw(); // draw again with the new color
     }
     function reset(){
         ctx.clearRect(0, 0, canvas.width, canvas.height);
     }
 
     function hover(id) {
-
+        // this function to draw again when mouse over li element
+        // and we use arcs array to draw
         var i = 0, r;
         var beginAngle = 0;
         var endAngle = 0;
@@ -123,6 +134,9 @@
             ctx.lineTo(canvas.width / 2, canvas.height / 2);
             ctx.fillStyle = myColor[j];
 
+            // the only difference from draw function
+            // we have the id of li element the mouse over it
+            // we make the arc bigger if we are drawing it and its id equal to the index
             if(id == i) {
                 ctx.lineWidth   = 8;
                 ctx.strokeStyle = myColor[j];
@@ -144,8 +158,9 @@
 
     }
 
-    canvas.onmousemove = function (e) {
 
+    canvas.onmousemove = function (e) {
+        // when mouse move on the canvas
 
         var rect = this.getBoundingClientRect(),
             x = e.clientX - rect.left,
@@ -166,6 +181,9 @@
             //alert(arcs[i][0]+" "+x+" "+arcs[i][1]+" "+y);
             ctx.fillStyle = myColor[j];
 
+            // the only difference from draw function
+            // we have the point x and y
+            // we make the arc bigger if we are drawing it and the (x,y) point inside the arc
             if(ctx.isPointInPath(x, y)) {
                 document.getElementById(i).style.fontSize = "20px";
                 document.getElementById("can").style.cursor = "pointer";
@@ -189,6 +207,7 @@
 
     };
 
+    // when mouse out of canvas resize the font to its default value
     canvas.onmouseout = function (e) {
         for(var i=0;i<entries.length;i++) {
             document.getElementById(i).style.fontSize = "18px";
